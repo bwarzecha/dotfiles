@@ -42,3 +42,24 @@ hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'M', hs.grid.maximizeWindow)
 -- lock screen shortcut
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function() hs.caffeinate.startScreensaver() end)
 
+-- turn off  bluetooth on sleen (lid closed)
+function bluetooth(power)
+    print("Setting bluetooth to " .. power)
+    result = hs.execute("blueutil --power " .. power)
+
+    if result.rc ~= 0 then
+        print("Unexpected result executing `blueutil`: rc=" .. result.rc .. " type=" .. result.type .. " output=" .. result.output)
+    end
+end
+
+function f(event)
+		print('Received event' ..  event)
+    if event == hs.caffeinate.watcher.systemWillSleep then
+        bluetooth("off")
+    elseif event == hs.caffeinate.watcher.screensDidWake then
+        bluetooth("on")
+    end
+end
+
+watcher = hs.caffeinate.watcher.new(f)
+watcher:start()

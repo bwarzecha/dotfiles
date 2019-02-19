@@ -11,6 +11,8 @@ call vundle#begin('~/.vundles')
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'dbeniamine/todo.txt-vim'
+Plugin 'dracula/vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
