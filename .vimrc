@@ -1,11 +1,12 @@
 " Use the Solarized Dark theme
 set background=dark
-colorscheme dracula
 
 "
 " Vundle configuration
 "
 source ~/.vim/vundle-config.vim
+
+colorscheme dracula
 
 " Make Vim more useful
 set nocompatible
@@ -85,7 +86,7 @@ endif
 set scrolloff=3
 
 " Autocomplete for todo files
-au filetype todo setlocal omnifunc=todo#complete
+au filetype todo setlocal omnifunc=todo#Complete
 " Auto complete projects
 au filetype todo imap <buffer> + +<C-X><C-O>
 
