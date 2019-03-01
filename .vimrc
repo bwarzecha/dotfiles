@@ -92,3 +92,7 @@ au filetype todo imap <buffer> + +<C-X><C-O>
 
 " Auto complete contexts
 au filetype todo imap <buffer> @ @<C-X><C-O>
+
+" Auto commit notes on save
+autocmd BufWritePost * execute ':silent ! if [ -f ".autocommit" ] &&  git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; fi > /dev/null 2>&1'
+
