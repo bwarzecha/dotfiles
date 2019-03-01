@@ -1,6 +1,8 @@
 " Use the Solarized Dark theme
 set background=dark
 
+set smartindent
+
 "
 " Vundle configuration
 "
