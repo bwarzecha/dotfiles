@@ -94,5 +94,12 @@ au filetype todo imap <buffer> + +<C-X><C-O>
 au filetype todo imap <buffer> @ @<C-X><C-O>
 
 " Auto commit notes on save
-autocmd BufWritePost * execute ':silent ! if [ -f ".autocommit" ] &&  git rev-parse --git-dir > /dev/null 2>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; fi > /dev/null 2>&1'
+autocmd BufWritePost * execute ':silent ! if [ -f ".autocommit" ] &&  git rev-parse --git-dir > /dev/null 3>&1 ; then git add % ; git commit -m "Auto-commit: saved %"; fi > /dev/null 2>&1'
 
+" Python development
+" PEP 8 indentation
+" YouCompleteMe
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>A
+let python_highlight_all=1
+let g:ycm_log_level = 'debug'

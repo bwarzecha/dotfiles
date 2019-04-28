@@ -1,0 +1,29 @@
+
+#+BEGIN_SRC emacs-lisp
+  (setq mac-command-modifier 'meta) ; make cmd key do Meta
+  (setq mac-option-modifier 'super) ; make opt key do Super
+  (setq mac-control-modifier 'control) ; make Control key do Control
+  (setq ns-function-modifier 'hyper)  ; make Fn key do Hyper
+
+
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+
+  (use-package auto-compile
+    :config (auto-compile-on-load-mode))
+
+  (setq load-prefer-newer t)
+
+
+  (setq user-full-name "Bartosz Warzecha"
+	user-mail-address "bartosz@warzecha.co.uk"
+	calendar-latitude 55.86
+	calendar-longitude -4.25
+	calendar-location-name "Glasgow, UK")
+
+  (use-package spacemacs-theme
+	:defer t
+  :init
+    (load-theme 'spacemacs-dark t))
+
+#+END_SRC

@@ -1,4 +1,4 @@
-"
+":
 " Vundle configuration
 "
 set nocompatible
@@ -13,6 +13,12 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'dbeniamine/todo.txt-vim'
 Plugin 'dracula/vim'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-syntastic/syntastic'
+" Checks PEP8
+Plugin 'nvie/vim-flake8'
+
+Plugin 'kien/ctrlp.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()

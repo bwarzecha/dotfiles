@@ -13,16 +13,19 @@ sudo rm -rf ~/.aliases > /dev/null 2>&1
 sudo rm -rf ~/.exports > /dev/null 2>&1
 sudo rm -rf ~/.functions > /dev/null 2>&1
 sudo rm -rf ~/.hammerspoon > /dev/null 2>&1
+sudo rm -rf ~/.emacs.d > /dev/null 2>&1
 
 
 ln -sfv ~/dotfiles/.vim ~/.vim
 ln -sfv ~/dotfiles/.vimrc ~/.vimrc
 ln -sfv ~/dotfiles/.bashrc ~/.bashrc
+ln -sfv ~/dotfiles/.zshrc ~/.zshrc
 ln -sfv ~/dotfiles/.bash_profile ~/.bash_profile
 ln -sfv ~/dotfiles/.aliases ~/.aliases
 ln -sfv ~/dotfiles/.exports ~/.exports
 ln -sfv ~/dotfiles/.functions ~/.functions
 ln -sfv ~/dotfiles/.hammerspoon ~/.hammerspoon
+ln -sfv ~/dotfiles/.emacs.d ~/.emacs.d
 
 function install-vim-plugins {
     echo "Installing Vim plugins..."
@@ -62,8 +65,25 @@ function require_brew {
     ok
 }
 
+function require_brew_cask {
+    running "brew $1 $2"
+    brew list $1 > /dev/null 2>&1 | true
+    if [[ ${PIPESTATUS[0]} != 0 ]]; then
+        action "brew cask install $1 $2"
+        brew cask install $1 $2
+        if [[ $? != 0 ]]; then
+            error "failed to install $1! aborting..."
+            # exit -1
+        fi
+    fi
+    ok
+}
+
+
 function install-brew-packages {
 	require_brew blueutil
+	require_brew_cask iterm2
+	require_brew_cask hammerspoon
 }
 
 install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" "$HOME/.vundle"
