@@ -86,12 +86,26 @@ function install-brew-packages {
 	require_brew_cask hammerspoon
 }
 
+function initialize-notes {
+    local -r repo="https://github.com/bwarzecha/notes.git"
+    local -r dest="~/notes"
+
+  	echo "Initializing notes..."
+    if [ -d "$dest" ]; then
+      (cd "$dest" && git pull -r --progress)
+    else
+      git clone --progress "$repo" "$dest"
+    fi
+}
+
 install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" "$HOME/.vundle"
 
 install-vim-plugins
 
 install-brew
 install-brew-packages
+
+initialize-notes
 
 echo -e "\n====== All Done!! ======\n"
 echo
