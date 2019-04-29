@@ -1,7 +1,6 @@
+* Basic Settings 
 
 #+BEGIN_SRC emacs-lisp
-
-
 
   (require 'use-package-ensure)
   (setq use-package-always-ensure t)
@@ -10,7 +9,6 @@
     :config (auto-compile-on-load-mode))
 
   (setq load-prefer-newer t)
-
 
   (setq user-full-name "Bartosz Warzecha"
 	user-mail-address "bartosz@warzecha.co.uk"
@@ -25,5 +23,27 @@
 (use-package org-bullets
   :init
   (add-hook 'org-mode-hook 'org-bullets-mode))
+
+#+END_SRC
+
+* Evil Mode
+
+#+BEGIN_SRC emacs-lisp
+
+;; load evil
+(use-package evil
+  :init ;; tweak evil's configuration before loading it
+  (setq evil-search-module 'evil-search)
+  (setq evil-ex-complete-emacs-commands nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (setq evil-shift-round nil)
+  (setq evil-want-C-u-scroll t)
+  :config ;; tweak evil after loading it
+  (evil-mode)
+
+  ;; example how to map a command in normal mode (called 'normal state' in evil)
+  (define-key evil-normal-state-map (kbd ", w") 'evil-window-vsplit))
+
 
 #+END_SRC
