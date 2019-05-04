@@ -1,11 +1,12 @@
 #!/bin/bash
 
+current_user=$(logname) 
+echo "Current user: $current_user"
 source ./echos.sh
 
 #==============
 # Remove old dot flies
 #==============
-current_user = $(logname) 
 
 sudo rm -rf ~/.vim > /dev/null 2>&1
 sudo rm -rf ~/.vimrc > /dev/null 2>&1
@@ -118,6 +119,8 @@ install-brew
 install-brew-packages
 
 initialize-notes
+
+set_permissions_to_hosts
 
 echo -e "\n====== All Done!! ======\n"
 echo
