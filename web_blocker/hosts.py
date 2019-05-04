@@ -28,6 +28,7 @@ import re
 import socket
 import struct
 from functools import cmp_to_key
+import tempfile
 
 def normalize_ipv4(ip):
     try:
@@ -145,11 +146,9 @@ class Hosts(object):
         except Exception as e:
             raise e
 
-        tmp_hosts_file_path = "{0}.tmp".format(path)  # Write atomically
-        with open(tmp_hosts_file_path, 'w') as tmp_hosts_file:
+        with open(path, "w") as tmp_hosts_file:
             tmp_hosts_file.write(contents)
-
-        os.rename(tmp_hosts_file_path, path)
+        
 
     def set_one(self, host_name, ip_address):
         """Set the given hostname to map to the given IP address"""

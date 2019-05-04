@@ -37,5 +37,20 @@ function f(event)
     end
 end
 
+function block_sites()
+    hs.execute("python3.7 ~/dotfiles/web_blocker/blocker.py /etc/hosts --block-all ~/dotfiles/web_blocker/websites.txt", true)
+    hs.alert.show("Websites Blocked")
+end
+
+function unblock_sites()
+    hs.execute("python3.7 ~/dotfiles/web_blocker/blocker.py /etc/hosts --unblock-all ~/dotfiles/web_blocker/websites.txt", true)
+  
+    hs.alert.show("Websites unblocked")
+end
+
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'B', function() block_sites() end)
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'U', function() unblock_sites() end)
+
+
 watcher = hs.caffeinate.watcher.new(f)
 watcher:start()

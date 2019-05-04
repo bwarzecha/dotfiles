@@ -28,7 +28,7 @@ if __name__ == '__main__':
                 names = f.read().split()
                 for hostname in names:
                     print('Unblcoking ' + hostname)
-                    hosts.remove_one(hostname, BLACK_HOLE_IP)
+                    hosts.remove_one(hostname, False)
 
 
         elif args.block:
