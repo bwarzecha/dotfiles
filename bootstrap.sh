@@ -5,6 +5,8 @@ source ./echos.sh
 #==============
 # Remove old dot flies
 #==============
+current_user = $(logname) 
+
 sudo rm -rf ~/.vim > /dev/null 2>&1
 sudo rm -rf ~/.vimrc > /dev/null 2>&1
 sudo rm -rf ~/.bashrc > /dev/null 2>&1
@@ -96,6 +98,16 @@ function initialize-notes {
     else
       git clone --progress "$repo" "$dest"
     fi
+}
+
+function set_permissions_to_hosts {
+    sudo dscl . -create /Groups/hostseditor
+    sudo dscl . -create /Groups/hostseditor RealName "Editors of /etc/hosts"
+    sudo dscl . -create /Groups/hostseditor gid 514
+    sudo dscl . -create /Groups/hostseditor passwd *
+    sudo dscl . -create /Groups/hostseditor GroupMembership $current_user
+    sudo chown :hostseditor /etc/hosts
+    sudo chmod 664 /etc/hosts
 }
 
 install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" "$HOME/.vundle"
