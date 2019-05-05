@@ -20,12 +20,29 @@
 	:defer t
 	:init
 	(load-theme 'spacemacs-dark t))
-(use-package org-bullets
-  :init
-  (add-hook 'org-mode-hook 'org-bullets-mode))
+
 (setq backup-directory-alist '(("." . "~/.emacs.d/file-backups")))
 #+END_SRC
 
+* Org Mode
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+
+(use-package org-bullets
+  :init
+  (add-hook 'org-mode-hook 'org-bullets-mode))
+
+(global-set-key (kbd "C-c c") 'org-capture)
+(setq org-default-notes-file "~/notes/inbox.org")
+
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/notes/inbox.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/notes/personal/journal.org")
+ "****  %<%H:%M> %?%a \n" :tree-type week)))
+(add-hook 'org-capture-mode-hook 'evil-insert-state)
+#+END_SRC
 * Evil Mode
 
 #+BEGIN_SRC emacs-lisp
