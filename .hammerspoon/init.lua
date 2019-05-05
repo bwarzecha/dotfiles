@@ -21,11 +21,7 @@ hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function() hs.caffeinate.startScreen
 -- turn off  bluetooth on sleen (lid closed)
 function bluetooth(power)
     print("Setting bluetooth to " .. power)
-    output, status, type, rc  = hs.execute("blueutil --power " .. power, true)
-
-		if rc ~= 0 then
-        print("Unexpected result executing `blueutil`: rc=" .. rc .. " type=" .. type .. " output=" .. output)
-    end
+    hs.execute([["blueutil" "--power "  "power"]], true)
 end
 
 function f(event)
@@ -38,14 +34,13 @@ function f(event)
 end
 
 function block_sites()
-    hs.execute("python3.7 ~/dotfiles/web_blocker/blocker.py /etc/hosts --block-all ~/dotfiles/web_blocker/websites.txt", true)
+    hs.execute([["python3.7" "~/dotfiles/web_blocker/blocker.py"  "/etc/hosts" "--block-all" "~/dotfiles/web_blocker/websites.txt"]], true)
     hs.alert.show("Websites Blocked")
 end
 
 function unblock_sites()
-    hs.execute("python3.7 ~/dotfiles/web_blocker/blocker.py /etc/hosts --unblock-all ~/dotfiles/web_blocker/websites.txt", true)
-  
-    hs.alert.show("Websites unblocked")
+    hs.execute([["python3.7" "~/dotfiles/web_blocker/blocker.py"  "/etc/hosts" "--unblock-all" "~/dotfiles/web_blocker/websites.txt"]], true)
+    hs.alert.show("Websites Unblocked")
 end
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'B', function() block_sites() end)
