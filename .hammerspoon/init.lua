@@ -43,6 +43,27 @@ function unblock_sites()
     hs.alert.show("Websites Unblocked")
 end
 
+function get_url()
+    local script = [[
+set myURL to "No browser active"
+set nameOfActiveApp to (path to frontmost application as text)
+if "Safari" is in nameOfActiveApp then
+    tell application "Safari"
+        set myURL to the URL of the current tab of the front window
+    end tell
+else if "Chrome" is in nameOfActiveApp then
+    tell application "Google Chrome"
+        set myURL to the URL of the active tab of the front window
+    end tell
+end if
+return (myURL)
+    ]]
+    _, message,_ = hs.osascript.applescript(script)
+    hs.alert.show( message)
+end
+
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'M', function() get_url();  end)
+
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'B', function() block_sites() end)
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'U', function() unblock_sites() end)
 
