@@ -42,6 +42,7 @@
         ("j" "Journal" entry (file+datetree "~/notes/personal/journal.org")
  "****  %<%H:%M> %?%a \n" :tree-type week)))
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
+(setq org-modules (quote (org-protocol)))
 #+END_SRC
 * Evil Mode
 

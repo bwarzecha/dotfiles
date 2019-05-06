@@ -8,6 +8,8 @@ hs.grid.GRIDHEIGHT = 3
 hs.window.animationDuration = 0
 
 local hyper = {"ctrl", "alt", "cmd"}
+hostname = hs.host.localizedName()
+isPersonal = string.match(hostname, "Bartosz") ~= nil
 
 hs.loadSpoon("MiroWindowsManager")
 spoon.MiroWindowsManager:bindHotkeys({ up = {hyper, "up"},
@@ -46,19 +48,40 @@ end
 function get_url()
     local script = [[
 set myURL to "No browser active"
+set myTitle to "No title"
 set nameOfActiveApp to (path to frontmost application as text)
 if "Safari" is in nameOfActiveApp then
     tell application "Safari"
         set myURL to the URL of the current tab of the front window
+        set myTitle to the name of the current tab of the front window
     end tell
 else if "Chrome" is in nameOfActiveApp then
     tell application "Google Chrome"
         set myURL to the URL of the active tab of the front window
+        set myTitle to the name of the current tab of the front window
     end tell
 end if
-return (myURL)
+set result to "[" & myURL & "]" & "[" & myTitle & "]"
+return (result)
     ]]
-    _, message,_ = hs.osascript.applescript(script)
+    local script_personal = [[
+        set myURL to "No browser active"
+        set myTitle to "No title"
+        set nameOfActiveApp to (path to frontmost application as text)
+        if "Safari" is in nameOfActiveApp then
+            tell application "Safari"
+                set myURL to the URL of the current tab of the front window
+                set myTitle to the name of the current tab of the front window
+            end tell
+        end if
+        set result to "[" & myURL & "]" & "[" & myTitle & "]"
+        return (result)
+            ]]
+    if isPersonal then
+        _, message,_ = hs.osascript.applescript(script_personal)
+    else 
+        _, message,_ = hs.osascript.applescript(script_personal)
+    end
     hs.alert.show( message)
 end
 
