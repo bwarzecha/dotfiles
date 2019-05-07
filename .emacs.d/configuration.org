@@ -67,43 +67,43 @@
 #+END_SRC
 * Erlang
 #+BEGIN_SRC emacs-lisp
-(use-package exec-path-from-shell
-:config
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-)
+  ;; (use-package exec-path-from-shell
+  ;; :config
+  ;; (when (memq window-system '(mac ns x))
+  ;;   (exec-path-from-shell-initialize))
+  ;; )
 
 
 
-(use-package erlang
-  :init
-  (add-to-list 'auto-mode-alist '("\\.P\\'" . erlang-mode))
-  (add-to-list 'auto-mode-alist '("\\.E\\'" . erlang-mode))
-  (add-to-list 'auto-mode-alist '("\\.S\\'" . erlang-mode))
-  :config
-  (add-hook 'erlang-mode-hook
-            (lambda ()
-              (setq mode-name "erl"
-                    erlang-compile-extra-opts '((i . "../include"))
-                    erlang-root-dir "/usr/local/opt/erlang/"))))
-(use-package edts
-  :init
-  (setq edts-inhibit-package-check t
-        edts-man-root "~/.emacs.d/edts/doc/21.3.7"))
+  ;; (use-package erlang
+  ;;   :init
+  ;;   (add-to-list 'auto-mode-alist '("\\.P\\'" . erlang-mode))
+  ;;   (add-to-list 'auto-mode-alist '("\\.E\\'" . erlang-mode))
+  ;;   (add-to-list 'auto-mode-alist '("\\.S\\'" . erlang-mode))
+  ;;   :config
+  ;;   (add-hook 'erlang-mode-hook
+  ;;             (lambda ()
+  ;;               (setq mode-name "erl"
+  ;;                     erlang-compile-extra-opts '((i . "../include"))
+  ;;                     erlang-root-dir "/usr/local/opt/erlang/"))))
+  ;; (use-package edts
+  ;;   :init
+  ;;   (setq edts-inhibit-package-check t
+  ;;         edts-man-root "~/.emacs.d/edts/doc/21.3.7"))
 
-(use-package flycheck
-  :diminish flycheck-mode
-  :config
-  (add-hook 'after-init-hook 'global-flycheck-mode)
-  (setq flycheck-display-errors-function nil
-        flycheck-erlang-include-path '("../include")
-        flycheck-erlang-library-path '()
-        flycheck-check-syntax-automatically '(save)))
+  ;; (use-package flycheck
+  ;;   :diminish flycheck-mode
+  ;;   :config
+  ;;   (add-hook 'after-init-hook 'global-flycheck-mode)
+  ;;   (setq flycheck-display-errors-function nil
+  ;;         flycheck-erlang-include-path '("../include")
+  ;;         flycheck-erlang-library-path '()
+  ;;         flycheck-check-syntax-automatically '(save)))
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
-(use-package elpy
-  :init
-  (elpy-enable)
-) 
+  ;; (use-package elpy
+  ;;   :init
+  ;;   (elpy-enable)
+  ;; ) 
 #+END_SRC
