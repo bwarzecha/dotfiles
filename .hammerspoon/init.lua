@@ -58,31 +58,33 @@ if "Safari" is in nameOfActiveApp then
 else if "Chrome" is in nameOfActiveApp then
     tell application "Google Chrome"
         set myURL to the URL of the active tab of the front window
-        set myTitle to the name of the current tab of the front window
+        set myTitle to the title of the active tab of the front window
     end tell
 end if
 set result to "[" & myURL & "]" & "[" & myTitle & "]"
 return (result)
     ]]
     local script_personal = [[
-        set myURL to "No browser active"
-        set myTitle to "No title"
-        set nameOfActiveApp to (path to frontmost application as text)
-        if "Safari" is in nameOfActiveApp then
-            tell application "Safari"
-                set myURL to the URL of the current tab of the front window
-                set myTitle to the name of the current tab of the front window
-            end tell
-        end if
-        set result to "[" & myURL & "]" & "[" & myTitle & "]"
-        return (result)
-            ]]
+set myURL to "No browser active"
+set myTitle to "No title"
+set nameOfActiveApp to (path to frontmost application as text)
+if "Safari" is in nameOfActiveApp then
+    tell application "Safari"
+        set myURL to the URL of the current tab of the front window
+        set myTitle to the name of the current tab of the front window
+    end tell
+end if
+set result to "[" & myURL & "]" & "[" & myTitle & "]"
+return (result)
+    ]]
     if isPersonal then
+        print('Running personal laptop script')
         _, message,_ = hs.osascript.applescript(script_personal)
     else 
-        _, message,_ = hs.osascript.applescript(script_personal)
+        print('Running work laptop script')
+        _, message,_ = hs.osascript.applescript(script)
     end
-    hs.alert.show( message)
+    hs.alert.show(message )
 end
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'M', function() get_url();  end)
