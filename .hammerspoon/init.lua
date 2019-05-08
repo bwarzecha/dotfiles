@@ -47,8 +47,15 @@ end
 
 function get_url()
     local script = [[
-set myURL to "No browser active"
-set myTitle to "No title"
+tell application "System Events"
+    set activeApp to first application process whose frontmost is true
+    set appWindow to the value of attribute "AXFocusedWindow" of activeApp
+    set activeAppName to name of the activeApp
+    set windowName to name of appWindow
+end tell
+
+set myURL to ""
+set myTitle to ""
 set nameOfActiveApp to (path to frontmost application as text)
 if "Safari" is in nameOfActiveApp then
     tell application "Safari"
@@ -61,12 +68,18 @@ else if "Chrome" is in nameOfActiveApp then
         set myTitle to the title of the active tab of the front window
     end tell
 end if
-set result to "[" & myURL & "]" & "[" & myTitle & "]"
-return (result)
+return {activeAppName, windowName, myUrl, myTitle}
     ]]
     local script_personal = [[
-set myURL to "No browser active"
-set myTitle to "No title"
+tell application "System Events"
+    set activeApp to first application process whose frontmost is true
+    set appWindow to the value of attribute "AXFocusedWindow" of activeApp
+    set activeAppName to name of the activeApp
+    set windowName to name of appWindow
+end tell
+
+set myURL to ""
+set myTitle to ""
 set nameOfActiveApp to (path to frontmost application as text)
 if "Safari" is in nameOfActiveApp then
     tell application "Safari"
@@ -74,8 +87,7 @@ if "Safari" is in nameOfActiveApp then
         set myTitle to the name of the current tab of the front window
     end tell
 end if
-set result to "[" & myURL & "]" & "[" & myTitle & "]"
-return (result)
+return {activeAppName, windowName, myUrl, myTitle}
     ]]
     if isPersonal then
         print('Running personal laptop script')
@@ -84,10 +96,10 @@ return (result)
         print('Running work laptop script')
         _, message,_ = hs.osascript.applescript(script)
     end
-    hs.alert.show(message )
+    hs.alert.show(table.concat(message, "\n"))
 end
 
-hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'M', function() get_url();  end)
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'T', function() get_url();  end)
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'B', function() block_sites() end)
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'U', function() unblock_sites() end)

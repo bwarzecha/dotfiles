@@ -43,6 +43,7 @@
  "****  %<%H:%M> %?%a \n" :tree-type week)))
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 (setq org-modules (quote (org-protocol)))
+(require 'ox-md)
 #+END_SRC
 * Evil Mode
 
