@@ -10,7 +10,7 @@ hs.window.animationDuration = 0
 local hyper = {"ctrl", "alt", "cmd"}
 hostname = hs.host.localizedName()
 isPersonal = string.match(hostname, "Bartosz") ~= nil
-log_event_file = os.getenv("HOME") .. "/notes/personal/log.txt" 
+log_event_file = os.getenv("HOME") .. "/notes/personal/" .. hostname:gsub(" ","_") .. ".txt" 
 
 hs.loadSpoon("MiroWindowsManager")
 spoon.MiroWindowsManager:bindHotkeys({ up = {hyper, "up"},
@@ -106,14 +106,14 @@ return {activeAppName, windowName, myUrl, myTitle}
         print('Running work laptop script')
         _, message,_ = hs.osascript.applescript(script)
     end
-
-    msg_str = table.concat(message, "\n")
-    if prev_msg ~= msg_str then 
-        log_event(os.date("%x %X", os.time()) .. " - " .. table.concat(message, ",") .. "\n")
-        hs.alert.show(os.date("%x %X", os.time()) .. ":\n" .. table.concat(message, "\n"))
-        prev_msg = msg_str
+    if message ~= nil then 
+        msg_str = table.concat(message, "\n")
+        if prev_msg ~= msg_str then 
+            log_event(os.date("%x %X", os.time()) .. " - " .. table.concat(message, ",") .. "\n")
+            -- hs.alert.show(os.date("%x %X", os.time()) .. ":\n" .. table.concat(message, "\n"))
+            prev_msg = msg_str
+        end
     end
-    return message
 end
 
 hs.timer.doEvery(5, get_active_app)
