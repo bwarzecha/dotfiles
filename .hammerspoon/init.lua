@@ -108,7 +108,7 @@ return {activeAppName, windowName, myUrl, myTitle}
     end
 
     msg_str = table.concat(message, "\n")
-    if prev_msg ~= msg_str then
+    if prev_msg ~= msg_str then 
         log_event(os.date("%x %X", os.time()) .. " - " .. table.concat(message, ",") .. "\n")
         hs.alert.show(os.date("%x %X", os.time()) .. ":\n" .. table.concat(message, "\n"))
         prev_msg = msg_str
