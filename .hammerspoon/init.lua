@@ -10,6 +10,7 @@ hs.window.animationDuration = 0
 local hyper = {"ctrl", "alt", "cmd"}
 hostname = hs.host.localizedName()
 isPersonal = string.match(hostname, "Bartosz") ~= nil
+log_event_file = os.getenv("HOME") .. "/notes/personal/log.txt" 
 
 hs.loadSpoon("MiroWindowsManager")
 spoon.MiroWindowsManager:bindHotkeys({ up = {hyper, "up"},
@@ -45,7 +46,16 @@ function unblock_sites()
     hs.alert.show("Websites Unblocked")
 end
 
-function get_url()
+function log_event(event) 
+    local this_file , line
+    line = event
+    this_file = io.open(log_event_file, "a") 
+    this_file:write(line) 
+    this_file:close() 
+end 
+
+prev_msg = ""
+function get_active_app()
     local script = [[
 tell application "System Events"
     set activeApp to first application process whose frontmost is true
@@ -96,10 +106,20 @@ return {activeAppName, windowName, myUrl, myTitle}
         print('Running work laptop script')
         _, message,_ = hs.osascript.applescript(script)
     end
-    hs.alert.show(table.concat(message, "\n"))
+
+    msg_str = table.concat(message, "\n")
+    if prev_msg ~= msg_str then
+        log_event(os.date("%x %X", os.time()) .. " - " .. table.concat(message, ",") .. "\n")
+        hs.alert.show(os.date("%x %X", os.time()) .. ":\n" .. table.concat(message, "\n"))
+        prev_msg = msg_str
+    end
+    return message
 end
 
-hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'T', function() get_url();  end)
+hs.timer.doEvery(5, get_active_app)
+    
+
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'T', function() get_active_app();  end)
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'B', function() block_sites() end)
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'U', function() unblock_sites() end)
