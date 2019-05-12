@@ -149,6 +149,7 @@ return {activeAppName, windowName, myUrl, myTitle}
         msg_str = table.concat(message, "\n")
         if prev_msg ~= msg_str then 
             if prev_details ~= nil then
+                prev_details.durationSeconds = os.difftime(os.time(),prev_time)
                 log_event("application_changed", prev_details)
             end
             prev_details = { 
@@ -156,8 +157,7 @@ return {activeAppName, windowName, myUrl, myTitle}
                 windowName = message[2],
                 url = message[3],
                 title = message[4],
-                start = timestamp, 
-                durationSeconds = os.difftime(os.time(),prev_time)
+                start = timestamp,
             }
             -- hs.alert.show(os.date("%x %X", os.time()) .. ":\n" .. table.concat(message, "\n"))
             prev_msg = msg_str
@@ -170,6 +170,7 @@ end
 logger_timer =  hs.timer.new(1, get_active_app)
 flush_timer = hs.timer.new(60, flush_events) -- Every 5 minutes
 logger_timer:start()
+flush_timer:start()
 get_active_app()
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'T', function() flush_events();  end)
