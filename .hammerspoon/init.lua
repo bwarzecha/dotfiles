@@ -169,6 +169,7 @@ return {activeAppName, windowName, myUrl, myTitle}
 end
 
 logger_timer =  hs.timer.new(1, get_active_app)
+flush_timer = hs.timer.new(300, flush_events) -- Every 5 minutes
 logger_timer:start()
 get_active_app()
 
