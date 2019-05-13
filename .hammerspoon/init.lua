@@ -10,7 +10,9 @@ hs.window.animationDuration = 0
 local hyper = {"ctrl", "alt", "cmd"}
 hostname = hs.host.localizedName()
 isPersonal = string.match(hostname, "Bartosz") ~= nil
-log_event_file = os.getenv("HOME") .. "/notes/personal/" .. hostname:gsub(" ","_") .. ".txt" 
+notes_directory = os.getenv("HOME") .. "/notes/"
+dotfiles_directory = os.getenv("HOME") .. "/dotfiles/"
+log_event_file = notes_directory .. "personal/" .. hostname:gsub(" ","_") .. ".txt" 
 
 hs.loadSpoon("MiroWindowsManager")
 spoon.MiroWindowsManager:bindHotkeys({ up = {hyper, "up"},
@@ -174,6 +176,29 @@ flush_timer:start()
 get_active_app()
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'T', function() flush_events();  end)
+
+
+function git_autocommit(directory)
+    local output, status, type, rc
+    output, status, type, rc = hs.execute(dotfiles_directory .. "autocommit.sh ".. notes_directory, true)
+    print(output)
+    if rc == 1 then
+        hs.alert.show('failed')
+    else 
+        hs.alert.show('autocommited')
+    end
+end
+
+function git_autopush(directory)
+    local output, status, type, rc
+    output, status, type, rc = hs.execute(dotfiles_directory .. "autopush.sh ".. notes_directory, true)
+    print(output .. status)
+    if rc == 1 then
+        hs.alert.show('autopush failed')
+    else 
+        hs.alert.show('autopush suceed')
+    end
+end
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'B', function() block_sites() end)
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'U', function() unblock_sites() end)
