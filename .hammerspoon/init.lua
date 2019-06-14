@@ -39,7 +39,9 @@ end
 -- turn off  bluetooth on sleen (lid closed)
 function bluetooth(power)
     print("Setting bluetooth to " .. power)
-    hs.execute([["blueutil" "--power "  "power"]], true)
+    local cmd = [[blueutil --power ]] .. power
+    print("Executing: " .. cmd)
+    hs.execute( cmd , true)
 end
 
 function caffeineEvents(event)
