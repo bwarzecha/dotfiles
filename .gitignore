@@ -1,7 +1,7 @@
 *.swp
 .emacs.d/*
 !.emacs.d/configuration.org
-!.emacs.d/init.el
+!.emacs.d/*.el
 !.emacs.d/resources
 !.emacs.d/snippets
 __pycache__
