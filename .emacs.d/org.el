@@ -6,10 +6,12 @@
   (add-hook 'org-mode-hook 'org-bullets-mode))
 
 (global-set-key (kbd "C-c c") 'org-capture)
-(setq org-default-notes-file "~/notes/inbox.org")
+
+(setq org-agenda-files '("~/productivity/inbox.org"
+                         "~/productivity/gtd.org"))
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/notes/inbox.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/notes/personal/journal.org")
-	 "****  %<%H:%M> %?%a \n" :tree-type week)))
+      '(("t" "Todo" entry (file+headline "~/productivity/inbox.org" "Tasks")
+         "* TODO %?\n  %i\n  %U %a")
+        ("j" "Journal" entry (file+datetree "~/productivity/journal.org")
+	 "****  %<%H:%M> %? \n\t %U %a" :tree-type week)))

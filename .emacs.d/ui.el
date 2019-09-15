@@ -25,9 +25,13 @@
 ;; no bell
 (setq ring-bell-function 'ignore)
 
+
 ;; Adding rotate window to make layout esier
 (when (not (package-installed-p 'rotate))
   (package-refresh-contents)
   (package-install 'rotate))
 
+
+;; Line wrap
+(setq-default truncate-lines 0)
 
