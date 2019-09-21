@@ -6,6 +6,7 @@
   (add-hook 'org-mode-hook 'org-bullets-mode))
 
 (global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 (setq org-agenda-files '("~/productivity/inbox.org"
                          "~/productivity/gtd.org"))
@@ -15,3 +16,7 @@
          "* TODO %?\n  %i\n  %U %a")
         ("j" "Journal" entry (file+datetree "~/productivity/journal.org")
 	 "****  %<%H:%M> %? \n\t %U %a" :tree-type week)))
+
+(setq org-refile-targets '(("~/productivity/gtd.org" :maxlevel . 3)
+                           ("~/productivity/someday.org" :level . 1)
+                           ("~/productivity/tickler.org" :maxlevel . 2)))
