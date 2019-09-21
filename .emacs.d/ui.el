@@ -35,3 +35,11 @@
 ;; Line wrap
 (setq-default truncate-lines 0)
 
+;; Adding IDO mode to make file switch easier
+(when (not (package-installed-p 'ido))
+  (package-refresh-contents)
+  (package-install 'ido))
+
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
