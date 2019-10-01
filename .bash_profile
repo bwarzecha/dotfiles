@@ -8,3 +8,4 @@ source .aliases
 # For local changes
 # Don't make edits below this
 [ -f ".bash_profile.local" ] && source ".bash_profile.local"
+
