@@ -1,5 +1,5 @@
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+      '((sequence "TODO(t) INPROGRESS(i) WAIT(w@/!) | DONE(d!) CANCELED(c@)")))
 
 (use-package org-bullets
   :init
@@ -20,3 +20,5 @@
 (setq org-refile-targets '(("~/productivity/gtd.org" :maxlevel . 3)
                            ("~/productivity/someday.org" :level . 1)
                            ("~/productivity/tickler.org" :maxlevel . 2)))
+
+(setq org-archive-location (concat "archive/%s_archive::datetree"))
