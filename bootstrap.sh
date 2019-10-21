@@ -17,6 +17,7 @@ sudo rm -rf ~/.exports > /dev/null 2>&1
 sudo rm -rf ~/.functions > /dev/null 2>&1
 sudo rm -rf ~/.hammerspoon > /dev/null 2>&1
 sudo rm -rf ~/.emacs.d > /dev/null 2>&1
+sudo rm -rf ~/.spacemacs > /dev/null 2>&1
 
 
 ln -sfv ~/dotfiles/.vim ~/.vim
@@ -29,6 +30,7 @@ ln -sfv ~/dotfiles/.exports ~/.exports
 ln -sfv ~/dotfiles/.functions ~/.functions
 ln -sfv ~/dotfiles/.hammerspoon ~/.hammerspoon
 ln -sfv ~/dotfiles/.emacs.d ~/.emacs.d
+ln -sfv ~/dotfiles/.spacemacs ~/.spacemacs
 
 function install-vim-plugins {
     echo "Installing Vim plugins..."
