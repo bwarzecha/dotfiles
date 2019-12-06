@@ -94,7 +94,6 @@ function install-brew-packages {
 
 function install-oh-my-zsh {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    chsh -s $(which zsh)
 }
 
 install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" "$HOME/.vundle"
@@ -105,5 +104,10 @@ install-brew
 install-brew-packages
 install-oh-my-zsh
 link-dot-files
+
+# if not ZSH change to zsh
+if [ -n "$ZSH_VERSION" ]; then
+    chsh -s $(which zsh)
+done
 
 ok DONE
