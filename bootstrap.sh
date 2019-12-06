@@ -4,33 +4,32 @@ current_user=$(logname)
 echo "Current user: $current_user"
 source ./echos.sh
 
-#==============
-# Remove old dot flies
-#==============
+# Fetch submodules
+git submodule update --init --recursive
 
-sudo rm -rf ~/.vim > /dev/null 2>&1
-sudo rm -rf ~/.vimrc > /dev/null 2>&1
-sudo rm -rf ~/.bashrc > /dev/null 2>&1
-sudo rm -rf ~/.bash_profile > /dev/null 2>&1
-sudo rm -rf ~/.aliases > /dev/null 2>&1
-sudo rm -rf ~/.exports > /dev/null 2>&1
-sudo rm -rf ~/.functions > /dev/null 2>&1
-sudo rm -rf ~/.hammerspoon > /dev/null 2>&1
-sudo rm -rf ~/.emacs.d > /dev/null 2>&1
-sudo rm -rf ~/.spacemacs > /dev/null 2>&1
+function delete-old(){
+    sudo rm -rf "$HOME/$1"  > /dev/null 2>&1
+    bot "$HOME/$1 deleted.."
+}
 
+function link(){
+    ln -sfv "$HOME/dotfiles/$1" "$HOME/$1"  > /dev/null 2>&1
 
-ln -sfv ~/dotfiles/.vim ~/.vim
-ln -sfv ~/dotfiles/.vimrc ~/.vimrc
-ln -sfv ~/dotfiles/.bashrc ~/.bashrc
-ln -sfv ~/dotfiles/.zshrc ~/.zshrc
-ln -sfv ~/dotfiles/.bash_profile ~/.bash_profile
-ln -sfv ~/dotfiles/.aliases ~/.aliases
-ln -sfv ~/dotfiles/.exports ~/.exports
-ln -sfv ~/dotfiles/.functions ~/.functions
-ln -sfv ~/dotfiles/.hammerspoon ~/.hammerspoon
-ln -sfv ~/dotfiles/.emacs.d ~/.emacs.d
-ln -sfv ~/dotfiles/.spacemacs ~/.spacemacs
+    bot "$HOME/$1 linked to $HOME/dotfiles/$1"
+}
+
+FILES=`ls -a | grep -E "^\.\w.*" | grep -v .git`
+
+function link-dot-files {
+    #Files to symlink to home directory. Everything starting with '.' except .git*
+
+    for f in $FILES
+        do
+            running $f
+            delete-old $f
+        link $f
+    done
+}
 
 function install-vim-plugins {
     echo "Installing Vim plugins..."
@@ -87,45 +86,23 @@ function require_brew_cask {
 
 function install-brew-packages {
 	require_brew blueutil
+	require_brew zsh
 	require_brew_cask iterm2
 	require_brew_cask hammerspoon
+	require_brew_cask emacs-plus
 }
 
-function initialize-notes {
-    local -r repo="https://github.com/bwarzecha/notes.git"
-    local -r dest="~/notes"
-
-  	echo "Initializing notes..."
-    if [ -d "$dest" ]; then
-      (cd "$dest" && git pull -r --progress)
-    else
-      git clone --progress "$repo" "$dest"
-    fi
+function install-oh-my-zsh {
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
-function set_permissions_to_hosts {
-    sudo dscl . -create /Groups/hostseditor
-    sudo dscl . -create /Groups/hostseditor RealName "Editors of /etc/hosts"
-    sudo dscl . -create /Groups/hostseditor gid 514
-    sudo dscl . -create /Groups/hostseditor passwd *
-    sudo dscl . -create /Groups/hostseditor GroupMembership $current_user
-    sudo chown :hostseditor /etc/hosts
-    sudo chmod 664 /etc/hosts
-}
+# install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" "$HOME/.vundle"
 
-install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" "$HOME/.vundle"
+# install-vim-plugins
 
-install-vim-plugins
+# install-brew
+# install-brew-packages
+# install-oh-my-zsh
+link-dot-files
 
-install-brew
-install-brew-packages
-
-initialize-notes
-
-set_permissions_to_hosts
-
-echo -e "\n====== All Done!! ======\n"
-echo
-
-
-
+ok DONE

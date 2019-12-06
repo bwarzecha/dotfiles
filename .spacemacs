@@ -286,7 +286,7 @@ values."
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
@@ -338,7 +338,11 @@ you should place your code here."
         '(("t" "Todo" entry (file+headline "~/productivity/inbox.org" "Tasks")
 	         "* TODO %?\n  %i\n  %U %a")
           ("j" "Journal" entry (file+datetree "~/productivity/journal.org")
-	         "****  %<%H:%M> %? \n\t %U %a" :tree-type week)))
+	         "****  %<%H:%M> %? \n\t %U %a" :tree-type week)
+          ("l" "A link, for reading later." entry
+           (file+headline "notes.org" "Reading List")
+           "* %:description\n%u\n\n%c\n\n%i"
+           :empty-lines 1)))
 
   (setq org-refile-targets '(("~/productivity/gtd.org" :maxlevel . 3)
                              ("~/productivity/someday.org" :level . 1)
@@ -347,7 +351,10 @@ you should place your code here."
   (setq org-archive-location (concat "archive/%s_archive::datetree"))
   (setq org-todo-keywords
         '((sequence "TODO(t) INPROGRESS(i) WAIT(w@/!) | DONE(d!) CANCELED(c@)")))
-  ;;
+  ;; Add path
+  (add-to-list 'exec-path "/usr/local/bin/")
+  ;; Add org-protocol
+  (require 'org-protocol)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

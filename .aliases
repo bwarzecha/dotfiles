@@ -1,4 +1,3 @@
 [ -f ".aliases.local" ] && source ".aliases.local"
 
-alias ec='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
-alias emacs='open -a /Applications/Emacs.app $1'
+alias em="emacsclient -nc -a ''"
