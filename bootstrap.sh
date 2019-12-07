@@ -111,4 +111,5 @@ if [ -n "$ZSH_VERSION" ]; then
 fi
 # Create .logs directory in User directory
 mkdir -p ~/.logs
+
 ok DONE

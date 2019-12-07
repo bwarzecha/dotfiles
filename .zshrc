@@ -65,7 +65,6 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-source .aliases
 
 #Saving history with timestamps
 HOSTNAME="`hostname`"
@@ -84,3 +83,15 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY_TIME
 unsetopt INC_APPEND_HISTORY
 unsetopt SHARE_HISTORY
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+source .aliases
+export PATH="/usr/local/sbin:$PATH"
