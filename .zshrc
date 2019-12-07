@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/bartosz/.oh-my-zsh"
+export ZSH="/Users/$USER/.oh-my-zsh"
 export DEFAULT_USER="$(whoami)"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -65,32 +65,22 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 source .aliases
+
+#Saving history with timestamps
+HOSTNAME="`hostname`"
+LOG_DIRECTORY="$HOME/.logs/zsh"
+[ ! -d $LOG_DIRECTORY ] && mkdir -p $LOG_DIRECTORY
+
+HIST_FILE="$LOG_DIRECTORY/${HOSTNAME}_history"
+
+export HISTSIZE=10000000
+export HISTFILE=$HIST_FILE     # history file name
+export SAVEHIST=10000000
+export HISTFILESIZE=1000000
+
+# Saves history with duration 
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY_TIME
+unsetopt INC_APPEND_HISTORY
+unsetopt SHARE_HISTORY

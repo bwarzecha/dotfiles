@@ -6,3 +6,4 @@
 !.emacs.d/snippets
 __pycache__
 .DS_Store
+.#*

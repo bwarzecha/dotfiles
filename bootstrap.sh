@@ -108,6 +108,7 @@ link-dot-files
 # if not ZSH change to zsh
 if [ -n "$ZSH_VERSION" ]; then
     chsh -s $(which zsh)
-done
-
+fi
+# Create .logs directory in User directory
+mkdir -p ~/.logs
 ok DONE
