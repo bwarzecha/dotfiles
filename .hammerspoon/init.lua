@@ -10,9 +10,7 @@ hs.window.animationDuration = 0
 local hyper = {"ctrl", "alt", "cmd"}
 hostname = hs.host.localizedName()
 isPersonal = string.match(hostname, "Bartosz") ~= nil
-notes_directory = os.getenv("HOME") .. "/notes/"
-dotfiles_directory = os.getenv("HOME") .. "/dotfiles/"
-log_event_file = notes_directory .. "personal/" .. hostname:gsub(" ","_") .. ".txt" 
+log_event_file = os.getenv("HOME") .. "/.logs/apps/" .. hostname:gsub(" ","_") .. "_history" 
 
 hs.loadSpoon("MiroWindowsManager")
 spoon.MiroWindowsManager:bindHotkeys({ up = {hyper, "up"},
@@ -25,6 +23,8 @@ hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function() hs.caffeinate.startScreen
 
 events_buffer = {}
 events_buffer.length = 0
+
+
 function log_event(name, details)
     event = {
         timestamp = os.date("%x %X", os.time()),
@@ -64,16 +64,6 @@ function caffeineEvents(event)
     end
 end
 
-function block_sites()
-    hs.execute([["python3.7" "~/dotfiles/web_blocker/blocker.py"  "/etc/hosts" "--block-all" "~/dotfiles/web_blocker/websites.txt"]], true)
-    hs.alert.show("Websites Blocked")
-end
-
-function unblock_sites()
-    hs.execute([["python3.7" "~/dotfiles/web_blocker/blocker.py"  "/etc/hosts" "--unblock-all" "~/dotfiles/web_blocker/websites.txt"]], true)
-    hs.alert.show("Websites Unblocked")
-end
-
 
 function encode_event(event)
     local lines = {}
@@ -85,13 +75,16 @@ function encode_event(event)
 end
 
 function flush_events() 
-    local this_file = io.open(log_event_file, "a") 
-    for i, event in ipairs(events_buffer) do 
-        this_file:write(encode_event(event) .. "\n")
-    end
-    this_file:close() 
-    events_buffer = {}
-    events_buffer.length = 0
+  local this_file,err = io.open(log_event_file, "a")
+  if this_file==nil then
+    print("Couldn't open file: "..err)
+  end
+  for i, event in ipairs(events_buffer) do 
+    this_file:write(encode_event(event) .. "\n")
+  end
+  this_file:close() 
+  events_buffer = {}
+  events_buffer.length = 0
 end 
 
 prev_msg = ""
@@ -178,32 +171,6 @@ flush_timer:start()
 get_active_app()
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'T', function() flush_events();  end)
-
-
-function git_autocommit(directory)
-    local output, status, type, rc
-    output, status, type, rc = hs.execute(dotfiles_directory .. "autocommit.sh ".. notes_directory, true)
-    print(output)
-    if rc == 1 then
-        hs.alert.show('failed')
-    else 
-        hs.alert.show('autocommited')
-    end
-end
-
-function git_autopush(directory)
-    local output, status, type, rc
-    output, status, type, rc = hs.execute(dotfiles_directory .. "autopush.sh ".. notes_directory, true)
-    print(output .. status)
-    if rc == 1 then
-        hs.alert.show('autopush failed')
-    else 
-        hs.alert.show('autopush suceed')
-    end
-end
-
-hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'B', function() block_sites() end)
-hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'U', function() unblock_sites() end)
 
 
 watcher = hs.caffeinate.watcher.new(caffeineEvents)

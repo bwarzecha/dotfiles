@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     lua
      html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -355,8 +356,7 @@ you should place your code here."
   (add-to-list 'exec-path "/usr/local/bin/")
   ;; Add org-protocol
   (require 'org-protocol)
-
-  ;; Clojure mode mappings
+  
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
