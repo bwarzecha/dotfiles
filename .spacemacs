@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     neotree
      lua
      html
      ;; ----------------------------------------------------------------
@@ -356,7 +357,11 @@ you should place your code here."
   (add-to-list 'exec-path "/usr/local/bin/")
   ;; Add org-protocol
   (require 'org-protocol)
-  
+  ;; Clojure bindings
+  (define-key global-map (kbd "H-.") 'sp-forward-slurp-sexp)
+  (define-key global-map (kbd "H-,") 'sp-backward-slurp-sexp)
+  (define-key global-map (kbd "H->") 'sp-forward-barf-sexp)
+  (define-key global-map (kbd "H-<") 'sp-backward-barf-sexp)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

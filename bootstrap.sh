@@ -99,9 +99,12 @@ function install-oh-my-zsh {
 install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" "$HOME/.vundle"
 
 install-vim-plugins
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+    install-brew
+    install-brew-packages
+fi
 
-install-brew
-install-brew-packages
 install-oh-my-zsh
 link-dot-files
 
@@ -110,6 +113,7 @@ if [ -n "$ZSH_VERSION" ]; then
     chsh -s $(which zsh)
 fi
 # Create .logs directory in User directory
-mkdir -p ~/.logs
+
+mkdir -p ~/.logs/apps
 
 ok DONE
