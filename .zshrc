@@ -95,3 +95,8 @@ unsetopt SHARE_HISTORY
 
 source .aliases
 export PATH="/usr/local/sbin:$PATH"
+
+# Load machine specific configuration from .zshrc.local
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local" 
+
+
