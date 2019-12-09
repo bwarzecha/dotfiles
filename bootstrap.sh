@@ -92,6 +92,13 @@ function install-brew-packages {
 	require_brew_cask emacs-plus
 }
 
+function set-mac-options {
+    # Set screenshot directory to ~/Desktop/screenshots
+    mkdir -p ~/Desktop/screenshots
+    defaults write com.apple.screencapture location "~/Desktop/screenshots"
+    killall SystemUIServer
+}
+
 function install-oh-my-zsh {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
@@ -103,6 +110,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
     install-brew
     install-brew-packages
+    set-mac-options
 fi
 
 install-oh-my-zsh
