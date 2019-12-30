@@ -1,3 +1,27 @@
 [ -f ".aliases.local" ] && source ".aliases.local"
 
 alias em="emacsclient -nc -a ''"
+
+function get-dev-instance-id() {
+    aws ec2 describe-instances --filters "Name=tag:dev-host,Values=dev-host" --query 'Reservations[].Instances[].InstanceId' --output text
+}
+
+function stop-dev() {
+    aws ec2 stop-instances --instance-ids `get-dev-instance-id`
+}
+
+function start-dev() {
+    aws ec2 start-instances --instance-ids `get-dev-instance-id`
+}
+
+function status-dev() {
+    aws ec2 describe-instance-status --instance-ids `get-dev-instance-id`
+}
+
+function connect-dev(){
+    mosh --ssh="ssh -i ~/.ssh/keys/DevBox.pem" bwarzecha@dev.bwarzecha.com -- tmux a
+}
+
+function connect-dev-ssh(){
+    ssh -i ~/.ssh/keys/DevBox.pem bwarzecha@dev.bwarzecha.com
+}
