@@ -33,6 +33,7 @@ values."
    '(
      neotree
      lua
+     multiple-cursors
      html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -113,7 +114,7 @@ values."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'vim
+   dotspacemacs-editing-style 'hybrid
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -199,7 +200,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-file-location 'original
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
@@ -271,7 +272,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -337,12 +338,12 @@ you should place your code here."
                            "~/productivity/gtd.org"))
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/productivity/inbox.org" "Tasks")
-	         "* TODO %?\n  %i\n  %U %a")
-          ("j" "Journal" entry (file+datetree "~/productivity/journal.org")
-	         "****  %<%H:%M> %? \n\t %U %a" :tree-type week)
+        '(("t" "Todo" entry (file+headline "~/notes/world.org" "Inbox")
+	         "* TODO %?\n  %i")
+          ("d" "Diary" entry (file+datetree "~/notes/diary.org")
+	         "****  %<%H:%M> %? " :tree-type week)
           ("l" "A link, for reading later." entry
-           (file+headline "notes.org" "Reading List")
+           (file+headline "~/notes/world.org" "Read Later")
            "* %:description\n%u\n\n%c\n\n%i"
            :empty-lines 1)))
 
@@ -362,6 +363,9 @@ you should place your code here."
   (define-key global-map (kbd "H-,") 'sp-backward-slurp-sexp)
   (define-key global-map (kbd "H->") 'sp-forward-barf-sexp)
   (define-key global-map (kbd "H-<") 'sp-backward-barf-sexp)
+  ;; Use ripgrep (faster) as search engine for helm
+  (setq helm-grep-ag-command "rg --color=always --colors 'match:fg:black' --colors 'match:bg:yellow' --smart-case --no-heading --line-number %s %s %s")
+  (setq helm-grep-ag-pipe-cmd-switches '("--colors 'match:fg:black'" "--colors 'match:bg:yellow'"))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
