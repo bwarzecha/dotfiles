@@ -351,7 +351,12 @@ you should place your code here."
                            "~/productivity/gtd.org"))
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/notes/world.org" "Inbox")
+        '(("w" "Work related templates")
+          ("wt" "Todo" entry (file+headline "~/notes/work.org" "Inbox")
+	         "** TODO %?")
+          ("wd" "Diary" entry (file+datetree "~/notes/work.org" "Log")
+	         "****  %<%H:%M> %? " :tree-type week)
+          ("t" "Todo" entry (file+headline "~/notes/world.org" "Inbox")
 	         "* TODO %?\n  %i")
           ("d" "Diary" entry (file+datetree "~/notes/diary.org")
 	         "****  %<%H:%M> %? " :tree-type week)
