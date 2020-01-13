@@ -13,13 +13,13 @@ isPersonal = string.match(hostname, "Bartosz") ~= nil
 log_event_file = os.getenv("HOME") .. "/.logs/apps/" .. hostname:gsub(" ","_") .. "_history" 
 
 hs.loadSpoon("MiroWindowsManager")
-spoon.MiroWindowsManager:bindHotkeys({ up = {hyper, "up"},
-  right = {hyper, "right"},
-  down = {hyper, "down"},
-  left = {hyper, "left"},
+spoon.MiroWindowsManager:bindHotkeys({ up = {hyper, "k"},
+  right = {hyper, "l"},
+  down = {hyper, "j"},
+  left = {hyper, "h"},
   fullscreen = {hyper, "m"} })
 
-hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function() hs.caffeinate.startScreensaver() end)
+-- hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function() hs.caffeinate.startScreensaver() end)
 
 events_buffer = {}
 events_buffer.length = 0

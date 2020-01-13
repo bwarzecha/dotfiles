@@ -1,6 +1,6 @@
 [ -f ".aliases.local" ] && source ".aliases.local"
 
-alias em="env TERM=xterm-256color emacsclient -nc -a ''"
+# alias em="env TERM=xterm-256color emacsclient -nc -a ''"
 
 function get-dev-instance-id() {
     aws ec2 describe-instances --filters "Name=tag:dev-host,Values=dev-host" --query 'Reservations[].Instances[].InstanceId' --output text

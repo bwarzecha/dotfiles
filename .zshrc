@@ -94,9 +94,11 @@ unsetopt SHARE_HISTORY
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source .aliases
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:$HOME/dotfiles/bin:$PATH"
 
 # Load machine specific configuration from .zshrc.local
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local" 
 
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
