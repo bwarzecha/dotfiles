@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(react
      neotree
      (multiple-cursors :variables multiple-cursors-backend 'evil-mc)
      lua

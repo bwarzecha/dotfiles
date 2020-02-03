@@ -105,3 +105,6 @@ let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>A
 let python_highlight_all=1
 let g:ycm_log_level = 'debug'
+
+" Map fd to exc
+imap fd <Esc>
