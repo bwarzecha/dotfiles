@@ -103,3 +103,4 @@ export PATH="/usr/local/sbin:$HOME/dotfiles/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ -s /Users/bartosz/.autojump/etc/profile.d/autojump.sh ]] && source /Users/bartosz/.autojump/etc/profile.d/autojump.sh
+function gi() { curl -sLw n https://www.gitignore.io/api/$@ ;}
