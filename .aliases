@@ -25,3 +25,9 @@ function connect-dev(){
 function connect-dev-ssh(){
     ssh -i ~/.ssh/keys/DevBox.pem bwarzecha@dev.bwarzecha.com
 }
+
+function start-https-tunnel(){
+			echo "Starting tunnel between https://dev.bwarzecha.com:8888 and http://localhost:8889"
+	ssh -nN -R 8080:localhost:8889  -i ~/.ssh/keys/DevBox.pem bwarzecha@dev.bwarzecha.com
+
+}
