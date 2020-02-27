@@ -161,7 +161,6 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -308,7 +307,7 @@ values."
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server t
+   dotspacemacs-persistent-server nil
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
@@ -357,27 +356,17 @@ you should place your code here."
   ;; Large images kill Emacs
   (setq org-image-actual-width nil)
   ;; Org mode other settings
-  (setq org-agenda-files '("~/productivity/inbox.org"
-                           "~/productivity/gtd.org"))
+  (setq org-agenda-files '("~/org"))
 
   (setq org-capture-templates
         '(("w" "Work related templates")
-          ("wt" "Todo" entry (file+headline "~/notes/work.org" "Inbox")
-	         "** TODO %?")
-          ("wd" "Diary" entry (file+datetree "~/notes/work.org" "Log")
-	         "****  %<%H:%M> %? " :tree-type week)
-          ("t" "Todo" entry (file+headline "~/notes/world.org" "Inbox")
+          ("t" "Todo" entry (file+headline "~/org/inbox.org")
 	         "* TODO %?\n  %i")
-          ("d" "Diary" entry (file+datetree "~/notes/diary.org")
+          ("d" "Diary" entry (file+datetree "~/org/log.org")
 	         "****  %<%H:%M> %? " :tree-type week)
-          ("l" "A link, for reading later." entry
-           (file+headline "~/notes/world.org" "Read Later")
-           "* %:description\n%u\n\n%c\n\n%i"
-           :empty-lines 1)))
+          (:empty-lines 1)))
 
-  (setq org-refile-targets '(("~/notes/work.org" :maxlevel . 3)
-                             ("~/notes/world.org" :maxlevel . 2)
-                             ("~/notes/diary.org"  :maxlevel . 2)))
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 
   (setq org-archive-location (concat "archive/%s_archive::datetree"))
   (setq org-todo-keywords
