@@ -356,19 +356,20 @@ you should place your code here."
   ;; Large images kill Emacs
   (setq org-image-actual-width nil)
   ;; Org mode other settings
-  (setq org-agenda-files '("~/org"))
+  (setq org-agenda-files '("~/org/areas.org"
+                           "~/org/projects.org"
+                           "~/org/resources.org"))
 
   (setq org-capture-templates
-        '(("w" "Work related templates")
-          ("t" "Todo" entry (file+headline "~/org/inbox.org")
+        '(("t" "Todo" entry (file+headline "~/org/inbox.org")
 	         "* TODO %?\n  %i")
           ("d" "Diary" entry (file+datetree "~/org/log.org")
 	         "****  %<%H:%M> %? " :tree-type week)
-          (:empty-lines 1)))
-
+          ))
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
-
-  (setq org-archive-location (concat "archive/%s_archive::datetree"))
+  (setq org-refile-allow-creating-parent-nodes t)
+  (setq org-archive-location "archive/%s_archive::")
+  (setq org-archive-save-context-info '(time file))
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "WAITING(w)" "INPROGRESS(i)" "UNCLEAR(u)" "|" "CANCELLED(c)" "DONE(d)")
                 (sequence "SOMEDAY(s)" "|" "CANCELLED(c)"))))
