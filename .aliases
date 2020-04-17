@@ -31,3 +31,6 @@ function start-https-tunnel(){
 	ssh -nN -R 8080:localhost:8889  -i ~/.ssh/keys/DevBox.pem bwarzecha@dev.bwarzecha.com
 
 }
+
+alias sbcl="rlwrap /usr/local/bin/sbcl"
+
