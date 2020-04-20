@@ -6,8 +6,6 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -52,7 +50,11 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Projects
+(setq projectile-project-search-path '("~/dev/" ))
 
+;; Clojure
+;;
 (setq clojure-align-forms-automatically t)
 (setq clojure-indent-style 'align-arguments)
 (setq clojure-align-forms-automatically t)
@@ -62,13 +64,51 @@
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
 
+;; clojure
+(add-hook! clojure-mode
+  (setq cljr-warn-on-eval nil
+        cljr-eagerly-build-asts-on-startup nil
+        cider-show-error-buffer 'only-in-repl)
+  (require #'flycheck-clj-kondo))
+
+(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
 
 ;;; :lang org
-;; Config mostly stole from:        http://www.howardism.org/Technical/Emacs/orgmode-wordprocessor.html
-
+;; Config mostly stolen from:        http://www.howardism.org/Technical/Emacs/orgmode-wordprocessor.html
 (after! org
   (setq org-directory "~/org/"
-        org-hide-emphasis-markers t)
+        org-hide-emphasis-markers t
+        org-superstar-leading-bullet '("⊚" "⊙" "◎" "◌" "●" ))
+  (setq org-agenda-files '("~/org/areas.org"
+                           "~/org/projects.org"
+                           "~/org/resources.org"))
+
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file "~/org/inbox.org")
+	         "* TODO %?\n  %i")
+          ("d" "Diary" entry (file+datetree "~/org/log.org")
+	         "****  %<%H:%M> %? " :tree-type week)
+          ))
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (setq org-refile-allow-creating-parent-nodes t)
+  (setq org-archive-location "archive/%s_archive::")
+  (setq org-archive-save-context-info '(time file))
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "WAITING(w)" "INPROGRESS(i)" "UNCLEAR(u)" "|" "CANCELLED(c)" "DONE(d)")
+                (sequence "SOMEDAY(s)" "|" "CANCELLED(c)"))))
+
+  (setq
+   ;; Coloured faces for agenda/todo items
+   org-todo-keyword-faces
+   '(
+     ("DONE" . (:foreground "#588da8" :weight bold  :strike-through t))
+     ("TODO" . (:foreground "#a8e6cf" :weight bold))
+     ("WAITING" . (:foreground "#fde2e2" :weight bold))
+     ("INPROGRESS" .  (:foreground "#ffd3b6" :weight bold))
+     ("CANCELLED" . (:foreground "#a8d3da" :weight bold :strike-through t))
+     ("SOMEDAY" . (:foreground "#ab82ff" :weight bold))
+     )
+   )
   (let* ((variable-tuple (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
                                ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
                                ((x-list-fonts "Verdana")         '(:font "Verdana"))
@@ -86,7 +126,54 @@
                             `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.25))))
                             `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.5))))
                             `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.75))))
-                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
+                            `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil))))))
+  )
+
+(setq org-journal-dir (concat "~/org/" "journal/"))
+(setq org-journal-file-format "%Y%m%d.org")
+(after! org-journal
+
+  ;; org-journal
+  (defun org-journal-save-entry-and-exit()
+    "Simple convenience function.
+  Saves the buffer of the current day's entry and kills the window
+  Similar to org-capture like behavior"
+    (interactive)
+    (save-buffer)
+    (kill-buffer-and-window))
+
+  (define-key org-journal-mode-map (kbd "C-c C-c") 'org-journal-save-entry-and-exit)
+
+  (defun get-journal-file-today ()
+    "Gets filename for today's journal entry."
+    (let ((daily-name (format-time-string "%Y%m%d")))
+      (expand-file-name (concat org-journal-dir daily-name))))
+
+  (defun journal-file-today ()
+    "Creates and load a journal file based on today's date."
+    (interactive)
+    (find-file (get-journal-file-today)))
+
+  (defun get-journal-file-yesterday ()
+    "Gets filename for yesterday's journal entry."
+    (let* ((yesterday (time-subtract (current-time) (days-to-time 1)))
+           (daily-name (format-time-string "%Y%m%d" yesterday)))
+      (expand-file-name (concat org-journal-dir daily-name))))
+
+  (defun journal-file-yesterday ()
+    "Creates and load a file based on yesterday's date."
+    (interactive)
+    (find-file (get-journal-file-yesterday))))
+
+(map! :leader
+      (:prefix ("j" . "journal") ;; org-journal bindings
+        :desc "Create new journal entry" "j" #'org-journal-new-entry
+        :desc "Open today" "t" #'journal-file-today
+        :desc "Open yesterday" "y" #'journal-file-yesterday
+        :desc "Search journal" "s" #'org-journal-search-forever))
+
+
+
 
 ;; :lang clojure
 (map! :leader
@@ -109,3 +196,5 @@
         :desc "sp-backward-up-sexp"             "U" #'sp-backward-up-sexp
         :desc "sp-unwrap-sexp"                  "W" #'sp-unwrap-sexp
         :desc "sp-copy-sexp"                    "y" #'sp-copy-sexp))
+
+;; company

@@ -48,3 +48,4 @@
 (package! aggressive-indent)
 (package! org)
 (package! evil-cleverparens)
+(package! org-journal)
