@@ -75,7 +75,9 @@
 
 ;;; :lang org
 ;; Config mostly stolen from:        http://www.howardism.org/Technical/Emacs/orgmode-wordprocessor.html
+
 (after! org
+ (require 'org-refile);; to fix the refile problem:  https://github.com/hlissner/doom-emacs/issues/2757
   (setq org-directory "~/org/"
         org-hide-emphasis-markers t
         org-superstar-leading-bullet '("⊚" "⊙" "◎" "◌" "●" ))
