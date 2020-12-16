@@ -164,11 +164,11 @@ return {activeAppName, windowName, myUrl, myTitle}
     end
 end
 
-logger_timer =  hs.timer.new(1, get_active_app)
-flush_timer = hs.timer.new(60, flush_events) -- Every 5 minutes
-logger_timer:start()
-flush_timer:start()
-get_active_app()
+-- logger_timer =  hs.timer.new(1, get_active_app)
+-- flush_timer = hs.timer.new(60, flush_events) -- Every 5 minutes
+-- logger_timer:start()
+-- flush_timer:start()
+-- get_active_app()
 
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'T', function() flush_events();  end)
 

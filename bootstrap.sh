@@ -108,12 +108,12 @@ install-from-git-repo "Vim Vundle"    "https://github.com/VundleVim/Vundle.vim" 
 install-vim-plugins
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
-    install-brew
-    install-brew-packages
+   # install-brew
+   #  install-brew-packages
     set-mac-options
 fi
 
-install-oh-my-zsh
+#install-oh-my-zsh
 link-dot-files
 
 # if not ZSH change to zsh
