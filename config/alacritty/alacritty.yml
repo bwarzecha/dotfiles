@@ -176,39 +176,37 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
 
-# Colors (Solarized Dark)
+# Isnpired from Iceberg theme.
 colors:
-  # Default colors
   primary:
-    background: '#002b36' # base03
-    foreground: '#839496' # base0
+    background: '0x16171E'
+    foreground: '0xD1D2D3'
 
-  # Cursor colors
   cursor:
-    text:   '#002b36' # base03
-    cursor: '#839496' # base0
+    text: '0xFEFFFF'
+    cursor: '0xc7c7c7'
 
   # Normal colors
   normal:
-    black:   '#073642' # base02
-    red:     '#dc322f' # red
-    green:   '#859900' # green
-    yellow:  '#b58900' # yellow
-    blue:    '#268bd2' # blue
-    magenta: '#d33682' # magenta
-    cyan:    '#2aa198' # cyan
-    white:   '#eee8d5' # base2
+    black: '0x000000'
+    red: '0xE68E8E'
+    green: '0x83AC8E'
+    yellow: '0xF5B78A'
+    blue: '0x9BB8DC'
+    magenta: '0xBAACE2'
+    cyan: '0x00C5C7'
+    white: '0xC7C7C7'
 
   # Bright colors
   bright:
-    black:   '#002b36' # base03
-    red:     '#cb4b16' # orange
-    green:   '#586e75' # base01
-    yellow:  '#657b83' # base00
-    blue:    '#839496' # base0
-    magenta: '#6c71c4' # violet
-    cyan:    '#93a1a1' # base1
-    white:   '#fdf6e3' # base3
+    black: '0x676767'
+    red: '0xFF6D67'
+    green: '0x5FF967'
+    yellow: '0xFEFB67'
+    blue: '0x6871FF'
+    magenta: '0xFF76FF'
+    cyan: '0x5FFDFF'
+    white: '0xFEFFFF'
   # Vi mode cursor colors
   #
   # Colors for the cursor when the vi mode is active.
