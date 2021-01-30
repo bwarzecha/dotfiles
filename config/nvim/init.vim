@@ -34,6 +34,9 @@ Plug 'rust-lang/rust.vim'
 Plug 'itchyny/lightline.vim'
 " Nord theme
 Plug 'arcticicestudio/nord-vim'
+" Which Key - spacemacs like key combination helper 
+Plug 'liuchengxu/vim-which-key'
+
 
 call plug#end()
 
@@ -54,7 +57,7 @@ inoremap fd <Esc>
 nnoremap <leader>fs :w<CR>
 
 " find - uses FZF
-noremap <leader>ff :Files<CR>
+nnoremap <expr> <leader>ff (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
 
 " Buffers
 nnoremap <leader>bb :Buffers<CR>
@@ -204,3 +207,8 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+" Which key configuration
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>s
