@@ -1,0 +1,16 @@
+" Selected Intellimacs modules
+source ~/.intellimacs/spacemacs.vim
+source ~/.intellimacs/extra.vim
+source ~/.intellimacs/major.vim
+source ~/.intellimacs/hybrid.vim
+
+" My own vim commands
+nnoremap Y y$
+
+" Comma for major mode
+nmap , <leader>m
+vmap , <leader>m
+
+set relativenumber
+
+imap fd <Esc>

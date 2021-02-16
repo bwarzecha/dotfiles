@@ -1,0 +1,7 @@
+{
+	"rust-analyzer.serverPath": "~/.cargo/bin/rust-analyzer",
+	"diagnostic.checkCurrentLine": "true",
+ 	"diagnostic.errorSign": "✘",
+  	"diagnostic.warningSign": "",
+ 	"diagnostic.infoSign": "",
+}
