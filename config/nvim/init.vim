@@ -35,7 +35,7 @@ Plug 'itchyny/lightline.vim'
 " Nord theme
 Plug 'arcticicestudio/nord-vim'
 Plug 'joshdick/onedark.vim'
-
+Plug 'ayu-theme/ayu-vim'
 " Which Key - spacemacs like key combination helper 
 Plug 'liuchengxu/vim-which-key'
 Plug 'preservim/nerdtree'
@@ -44,6 +44,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/nerdcommenter'
+" Tmux pane navigation
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 if has('termguicolors')
